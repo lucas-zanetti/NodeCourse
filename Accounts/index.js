@@ -24,6 +24,13 @@ function operation(){
         switch(action){
             case 'Criar Conta':
                 createAccount();
+                break;
+            case 'Sair':
+                finishProgram();
+                break;
+            default:
+                console.error('Action error!')
+                operation();
         }
     })
     .catch(err => console.log(err));
@@ -77,4 +84,10 @@ function finishAccountCreation(accountFilePath){
     console.log(chalk.green('Parabéns a sua conta foi criada!'));
 
     operation();
+}
+
+function finishProgram(){
+    console.log(chalk.bgBlue.black('Obrigado por usar o Accounts!'));
+
+    process.exit();
 }
