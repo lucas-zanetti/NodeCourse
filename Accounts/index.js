@@ -30,6 +30,9 @@ function operation(){
             case 'Depositar':
                 deposit();
                 break;
+            case 'Consultar Saldo':
+                getAccountBalance();
+                break;
             case 'Sair':
                 finishProgram();
                 break;
@@ -163,4 +166,27 @@ function getAccount(accountName){
         });
     
     return JSON.parse(accountJson);
+}
+
+function getAccountBalance(){
+    inquirer.prompt([
+        {
+            name: 'accountName',
+            message: 'Qual o nome da conta para consultar o saldo?'
+        }
+    ])
+    .then(answer =>{
+        const accountName = answer['accountName'];
+
+        if(!existAccount(accountName)){
+            return getAccountBalance();
+        }
+
+        const accountData = getAccount(accountName);
+
+        console.log(chalk.bgBlue.black(`O saldo de sua conta é R$${accountData.balance}`));
+
+        operation();
+    })
+    .catch(err => console.log(err));
 }
